@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "570394562012",
+    "firebase_url": "https://appshopping-73b4b.firebaseio.com",
+    "project_id": "appshopping-73b4b",
+    "storage_bucket": "appshopping-73b4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570394562012:android:865ec620713e93a4",
+        "android_client_info": {
+          "package_name": "com.example.phongphung.appshopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570394562012-5ldar3pkvmue1q3ol8sd162l9c9rahi5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.phongphung.appshopping",
+            "certificate_hash": "7d8d45ad1a9a0eda898077dfacc3a0c16bcb7481"
+          }
+        },
+        {
+          "client_id": "570394562012-5u1rt5q52ua6bhgj0t3lbg4nl422p6hk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDTIjEHDW-UNUvyP4KLI965yVFU_89BpM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570394562012-5u1rt5q52ua6bhgj0t3lbg4nl422p6hk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,7 +8,7 @@ import com.example.phongphung.appshopping.R;
 import com.example.phongphung.appshopping.interFace.ItemClickListener;
 
 
-public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class OrderViewHolder extends RecyclerView.ViewHolder {
 
     public TextView tvOrderID,tvOrderStatus,tvOrderPhone,tvOrderAdress;
     private ItemClickListener itemClickListener;
@@ -24,11 +24,6 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         tvOrderStatus = itemView.findViewById(R.id.order_status_text_view);
         tvOrderAdress = itemView.findViewById(R.id.order_address_text_view);
 
-        itemView.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        itemClickListener.onClick(v,getAdapterPosition(),false);
-    }
 }

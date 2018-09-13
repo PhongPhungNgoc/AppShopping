@@ -19,7 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -355,6 +357,15 @@ public class CartActivity extends AppCompatActivity implements
                                         //Set this address to edit text
                                         ((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input))
                                                 .setText(address);
+                                        if (!address.equals("")){
+                                            shipToAddressRadioButton.setEnabled(false);
+                                        }
+
+                                        if (!((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input)).getText().equals(address)){
+                                            shipToAddressRadioButton.setSelected(false);
+                                        }
+
+
 
                                     } catch (NullPointerException e) { //atrapar el error y mostrarlo y q no crashee app.
                                         Log.d(TAG, "onResponse: NullPointerException: " + e.getMessage());
@@ -612,9 +623,9 @@ public class CartActivity extends AppCompatActivity implements
         recyclerView.setAdapter(adapter);
 
         //Calculate total price
-        int total = 0;
+        float total = 0;
         for (Order order : orders) {
-            total += (Integer.parseInt(order.getPrice())) * (Integer.parseInt(order.getQuantity()));
+            total += (Float.parseFloat(order.getPrice())) * (Float.parseFloat(order.getQuantity()));
         }
         Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);

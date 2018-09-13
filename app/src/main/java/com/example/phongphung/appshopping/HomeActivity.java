@@ -35,6 +35,7 @@ import com.example.phongphung.appshopping.interFace.ItemClickListener;
 import com.example.phongphung.appshopping.model.Banner;
 import com.example.phongphung.appshopping.model.Category;
 import com.example.phongphung.appshopping.viewHolder.CategoryViewHolder;
+import com.example.phongphung.appshopping.viewHolder.ListOrderActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -284,7 +285,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -294,6 +295,9 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_favorites) {
             Intent intent = new Intent(HomeActivity.this, FavouriteActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_orders){
+            Intent intent = new Intent(HomeActivity.this, ListOrderActivity.class);
             startActivity(intent);
         }
 

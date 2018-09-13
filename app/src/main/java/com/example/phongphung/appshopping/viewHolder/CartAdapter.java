@@ -37,7 +37,6 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
 
     @Override
     public void onBindViewHolder(CartViewHolder holder, final int position) {
-
         //load image in cart item.
         Picasso.with(cartActivity.getBaseContext())
                 .load(listData.get(position).getImage())
@@ -55,10 +54,10 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
 
                 //Update extTotal
                 //Calculate total price
-                int total = 0;
+                float total = 0;
                 List<Order> orders = new Database(cartActivity).getCarts(Common.currentUser.getPhone());
                 for(Order item: orders){
-                    total += (Integer.parseInt(item.getPrice()))*(Integer.parseInt(item.getQuantity()));
+                    total += (Float.parseFloat(item.getPrice()))*(Float.parseFloat(item.getQuantity()));
                 }
                 Locale locale = new Locale("en", "US");
                 NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);

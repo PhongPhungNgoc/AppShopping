@@ -58,7 +58,7 @@
 
         <activity android:name=".ShowCommentActivity" />
         <activity android:name=".FavouriteActivity" />
-        <activity android:name=".viewHolder.ListOrderActivity"></activity>
+        <activity android:name=".ListOrderActivity"></activity>
     </application>
 
 </manifest>

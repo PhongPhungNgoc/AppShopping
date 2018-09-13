@@ -174,7 +174,7 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
                         Common.currentUser.getPhone(),
                         foodId,
                         currentProduct.getName(),
-                        "1",
+                        numberButton.getNumber(),
                         String.valueOf(currentProduct.getPrice()),
                         String.valueOf(currentProduct.getDiscount()),
                         currentProduct.getImage()
@@ -183,10 +183,11 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
                 Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                 cartButtonFab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
                 break;
+
             case R.id.rating_button_fab:
                 showRatingDialog();
-                
                 break;
+
             case R.id.show_comments_button:
                 Intent intent = new Intent(this,ShowCommentActivity.class);
                 intent.putExtra(Common.INTENT_FOOD_ID,foodId);

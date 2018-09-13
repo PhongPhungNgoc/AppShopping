@@ -23,7 +23,6 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         tvOrderPhone = itemView.findViewById(R.id.order_phone_text_view);
         tvOrderStatus = itemView.findViewById(R.id.order_status_text_view);
         tvOrderAdress = itemView.findViewById(R.id.order_address_text_view);
-
     }
 
 }

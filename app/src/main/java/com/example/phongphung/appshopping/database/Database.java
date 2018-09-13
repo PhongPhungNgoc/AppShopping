@@ -165,7 +165,6 @@ public class Database extends SQLiteAssetHelper {
         final List<Favorite> result = new ArrayList<>();
         if (c.moveToFirst()) {
             do {
-                //Son los nombres en la tabla en la base de datos local.
                 result.add(new Favorite(
                         c.getString(c.getColumnIndex("ProductId")),
                         c.getString(c.getColumnIndex("ProductName")),
@@ -178,7 +177,6 @@ public class Database extends SQLiteAssetHelper {
                 );
             } while (c.moveToNext());
         }
-
         return result;
     }
 

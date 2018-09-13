@@ -632,7 +632,6 @@ public class CartActivity extends AppCompatActivity implements
 
         totalPriceTextView.setText(fmt.format(total));
     }
-    //Press ctl+O
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -693,10 +692,10 @@ public class CartActivity extends AppCompatActivity implements
 
             //Update extTotal
             //Calculate total price
-            int total = 0;
+            float total = 0;
             List<Order> orders = new Database(getBaseContext()).getCarts(Common.currentUser.getPhone());
             for (Order item : orders) {
-                total += (Integer.parseInt(item.getPrice())) * (Integer.parseInt(item.getQuantity()));
+                total += (Float.parseFloat(item.getPrice())) * (Float.parseFloat(item.getQuantity()));
             }
             Locale locale = new Locale("en", "US");
             NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
@@ -712,10 +711,10 @@ public class CartActivity extends AppCompatActivity implements
 
                     //Update extTotal
                     //Calculate total price
-                    int total = 0;
+                    float total = 0;
                     List<Order> orders = new Database(getBaseContext()).getCarts(Common.currentUser.getPhone());
                     for (Order item : orders) {
-                        total += (Integer.parseInt(item.getPrice())) * (Integer.parseInt(item.getQuantity()));
+                        total += (Float.parseFloat(item.getPrice())) * (Float.parseFloat(item.getQuantity()));
                     }
                     Locale locale = new Locale("en", "US");
                     NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);

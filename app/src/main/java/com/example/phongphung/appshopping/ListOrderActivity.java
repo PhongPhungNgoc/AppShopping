@@ -1,4 +1,4 @@
-package com.example.phongphung.appshopping.viewHolder;
+package com.example.phongphung.appshopping;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.phongphung.appshopping.R;
 import com.example.phongphung.appshopping.common.Common;
 import com.example.phongphung.appshopping.model.OrderRequest;
+import com.example.phongphung.appshopping.viewHolder.OrderViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -64,7 +65,6 @@ public class ListOrderActivity extends AppCompatActivity {
                     viewHolder.tvOrderPhone.setText(model.getPhone());
                     viewHolder.tvOrderAdress.setText(model.getAdress());
                 }
-
             }
 
             @Override
@@ -76,7 +76,6 @@ public class ListOrderActivity extends AppCompatActivity {
         adapter.startListening();
         adapter.notifyDataSetChanged();
         listOrdersRecycler.setAdapter(adapter);
-
     }
 
 
@@ -85,6 +84,4 @@ public class ListOrderActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-
-
 }

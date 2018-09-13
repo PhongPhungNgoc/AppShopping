@@ -35,7 +35,6 @@ import com.example.phongphung.appshopping.interFace.ItemClickListener;
 import com.example.phongphung.appshopping.model.Banner;
 import com.example.phongphung.appshopping.model.Category;
 import com.example.phongphung.appshopping.viewHolder.CategoryViewHolder;
-import com.example.phongphung.appshopping.viewHolder.ListOrderActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +45,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
@@ -296,6 +294,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_favorites) {
             Intent intent = new Intent(HomeActivity.this, FavouriteActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_orders){
             Intent intent = new Intent(HomeActivity.this, ListOrderActivity.class);
             startActivity(intent);

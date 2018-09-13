@@ -8,6 +8,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -94,6 +95,8 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
 
         //firebase
         database = FirebaseDatabase.getInstance();
+
+        Log.d("abc", "onCreate: "+"abc");
         foods = database.getReference("Product");
         ratingTbl = database.getReference("Rating");
 

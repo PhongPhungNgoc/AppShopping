@@ -43,6 +43,7 @@ public class ListOrderActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         request = database.getReference("Order");
 
+
         listOrdersRecycler.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         listOrdersRecycler.setLayoutManager(layoutManager);
@@ -59,7 +60,7 @@ public class ListOrderActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<OrderRequest, OrderViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull OrderViewHolder viewHolder, final int position, @NonNull final OrderRequest model) {
-                if (model.getPhone() == Common.currentUser.getPhone()) {
+                if (model.getPhone().equals(Common.currentUser.getPhone())) {
                     viewHolder.tvOrderID.setText(adapter.getRef(position).getKey());
                     viewHolder.tvOrderStatus.setText(Common.convertCodeToStatus(model.getStatus()));
                     viewHolder.tvOrderPhone.setText(model.getPhone());

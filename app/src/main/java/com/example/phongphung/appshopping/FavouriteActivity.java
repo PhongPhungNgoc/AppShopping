@@ -16,7 +16,7 @@ import com.example.phongphung.appshopping.helper.RecyclerItemTouchHelper;
 import com.example.phongphung.appshopping.interFace.RecyclerItemTouchHelperListener;
 import com.example.phongphung.appshopping.model.Favorite;
 import com.example.phongphung.appshopping.viewHolder.FavoriteViewHolder;
-import com.example.phongphung.appshopping.viewHolder.FavouriteAdapter;
+import com.example.phongphung.appshopping.adapter.FavouriteAdapter;
 
 
 public class FavouriteActivity extends AppCompatActivity implements RecyclerItemTouchHelperListener {

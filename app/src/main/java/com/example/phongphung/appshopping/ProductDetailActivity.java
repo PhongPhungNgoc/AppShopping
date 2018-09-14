@@ -170,18 +170,25 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
         switch (view.getId()) {
             case R.id.cart_button_fab:
 
-                new Database(getBaseContext()).addToCart(new Order(
-                        Common.currentUser.getPhone(),
-                        foodId,
-                        currentProduct.getName(),
-                        numberButton.getNumber(),
-                        String.valueOf(currentProduct.getPrice()),
-                        String.valueOf(currentProduct.getDiscount()),
-                        currentProduct.getImage()
-                ));
+                if(! new Database(getBaseContext()).isExitCart(foodId, Common.currentUser.getPhone())){
 
-                Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                cartButtonFab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
+                    new Database(getBaseContext()).addToCart(new Order(
+                            Common.currentUser.getPhone(),
+                            foodId,
+                            currentProduct.getName(),
+                            numberButton.getNumber(),
+                            String.valueOf(currentProduct.getPrice()),
+                            String.valueOf(currentProduct.getDiscount()),
+                            currentProduct.getImage()
+                    ));
+
+                    Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    cartButtonFab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
+                }
+                else {
+                    Toast.makeText(this, "Giỏ hàng đã có sản phẩm này", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
 
             case R.id.rating_button_fab:

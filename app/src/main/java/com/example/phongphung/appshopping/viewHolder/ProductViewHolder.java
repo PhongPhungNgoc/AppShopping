@@ -16,9 +16,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
 
     private ItemClickListener itemClickListener;
 
-
-
-
     public ProductViewHolder(View itemView) {
         super(itemView);
 
@@ -39,8 +36,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-
         itemClickListener.onClick(v, getAdapterPosition(), false);
-
     }
 }

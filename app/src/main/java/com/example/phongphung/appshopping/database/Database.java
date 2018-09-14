@@ -117,6 +117,19 @@ public class Database extends SQLiteAssetHelper {
         db.execSQL(query);
     }
 
+    public boolean isExitCart(String productID, String userPhone) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = String.format("SELECT * FROM OrderDetail WHERE ProductId='%s' and UserPhone='%s';", productID, userPhone);
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
+
     //Favorites
     public void addToFavorites(Favorite product) {
         SQLiteDatabase db = getReadableDatabase();

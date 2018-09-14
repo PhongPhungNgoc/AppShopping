@@ -1,4 +1,4 @@
-package com.example.phongphung.appshopping.viewHolder;
+package com.example.phongphung.appshopping.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.example.phongphung.appshopping.database.Database;
 import com.example.phongphung.appshopping.interFace.ItemClickListener;
 import com.example.phongphung.appshopping.model.Favorite;
 import com.example.phongphung.appshopping.model.Order;
+import com.example.phongphung.appshopping.viewHolder.FavoriteViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -61,7 +62,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavoriteViewHolder> {
                     ));
 
                 } else {
-
                     new Database(context).increaseCart(Common.currentUser.getPhone(), favoriteList.get(position).getProductID());
                 }
                 Toast.makeText(context, "Sản phẩm đã thêm vào giỏ hàng !!!", Toast.LENGTH_SHORT).show();

@@ -34,6 +34,7 @@ import com.example.phongphung.appshopping.database.Database;
 import com.example.phongphung.appshopping.interFace.ItemClickListener;
 import com.example.phongphung.appshopping.model.Banner;
 import com.example.phongphung.appshopping.model.Category;
+import com.example.phongphung.appshopping.model.OrderRequest;
 import com.example.phongphung.appshopping.viewHolder.CategoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -132,6 +133,8 @@ public class HomeActivity extends AppCompatActivity
         };
 
         setSupportActionBar(toolbar);
+
+
 
         fab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
 
@@ -381,7 +384,6 @@ public class HomeActivity extends AppCompatActivity
                 dialog.dismiss();
             }
         });
-
         alertDialog.show();
     }
 
@@ -391,6 +393,4 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = new Intent(HomeActivity.this, CartActivity.class);
         startActivity(intent);
     }
-
-
 }

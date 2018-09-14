@@ -19,9 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -43,7 +41,7 @@ import com.example.phongphung.appshopping.model.Order;
 import com.example.phongphung.appshopping.model.OrderRequest;
 import com.example.phongphung.appshopping.model.User;
 import com.example.phongphung.appshopping.remote.IGoogleService;
-import com.example.phongphung.appshopping.viewHolder.CartAdapter;
+import com.example.phongphung.appshopping.adapter.CartAdapter;
 import com.example.phongphung.appshopping.viewHolder.CartViewHolder;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -318,7 +316,6 @@ public class CartActivity extends AppCompatActivity implements
             public void onPlaceSelected(Place place) {
                 shippingAddress = place;
                 Log.d(TAG, "onPlaceSelected: " + place.toString());
-
             }
 
             @Override
@@ -367,7 +364,7 @@ public class CartActivity extends AppCompatActivity implements
 
 
 
-                                    } catch (NullPointerException e) { //atrapar el error y mostrarlo y q no crashee app.
+                                    } catch (NullPointerException e) {
                                         Log.d(TAG, "onResponse: NullPointerException: " + e.getMessage());
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -462,6 +459,8 @@ public class CartActivity extends AppCompatActivity implements
                             orders
                     );
 
+
+
                     //Submit to Firebase
                     //We will using System.currentMilli to key
                     String order_number = String.valueOf(System.currentTimeMillis());
@@ -471,8 +470,14 @@ public class CartActivity extends AppCompatActivity implements
                     new Database(getBaseContext()).cleanCart(Common.currentUser.getPhone());
 
 
-                    Toast.makeText(CartActivity.this, "Cảm ơn , Đơn hàng đang được xử lý !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Cảm ơn , Đơn hàng đang được xử lý !!!", Toast.LENGTH_LONG).show();
+
+//                    Intent intentOrder = new Intent(getApplicationContext(), HomeActivity.class);
+//                    intentOrder.putExtra("ORDER", orderRequest);
+//                    startActivity(intentOrder);
+
                     finish();
+
 
                 } else if (appBalanceRadioButton.isChecked()) {
 
@@ -601,7 +606,7 @@ public class CartActivity extends AppCompatActivity implements
                         //Delete Cart
                         new Database(getBaseContext()).cleanCart(Common.currentUser.getPhone());
 
-                        Toast.makeText(CartActivity.this, "Cảm ơn , Đơn hàng đang được xử lý !!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CartActivity.this, "Cảm ơn , Đơn hàng đang được xử lý !!!", Toast.LENGTH_LONG).show();
                         finish();
 
                     } catch (JSONException e) {

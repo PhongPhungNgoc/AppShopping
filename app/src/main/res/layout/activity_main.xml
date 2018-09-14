@@ -47,7 +47,7 @@
             android:shadowColor="@android:color/black"
             android:text="Đăng ký"
             android:textColor="@android:color/white"
-            />
+            android:background="@color/btnSignUp"/>
 
         <Button
             android:id="@+id/btnSignIn"
@@ -59,7 +59,7 @@
             android:shadowColor="@android:color/black"
             android:text="Đăng nhập"
             android:textColor="@android:color/white"
-            />
+            android:background="@color/signInActive" />
     </LinearLayout>
 
 </RelativeLayout>

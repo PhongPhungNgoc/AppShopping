@@ -1,8 +1,9 @@
 package com.example.phongphung.appshopping.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderRequest {
+public class OrderRequest implements Serializable{
     private String phone,name,adress,status,comment,paymentState,latLng;
     private List<Order> foods;
     private String total;

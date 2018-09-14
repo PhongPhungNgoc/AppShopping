@@ -1,7 +1,9 @@
 package com.example.phongphung.appshopping.model;
 
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable{
 
     private String userPhone;
     private String productId, productName, quantity, price, discount, image;

@@ -1,4 +1,4 @@
-package com.example.phongphung.appshopping.viewHolder;
+package com.example.phongphung.appshopping.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import com.example.phongphung.appshopping.R;
 import com.example.phongphung.appshopping.common.Common;
 import com.example.phongphung.appshopping.database.Database;
 import com.example.phongphung.appshopping.model.Order;
+import com.example.phongphung.appshopping.viewHolder.CartViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;

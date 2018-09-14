@@ -1,7 +1,5 @@
 package com.example.phongphung.appshopping.model;
 
-
-
 public class Banner {
 
     private String name, image;
@@ -10,7 +8,7 @@ public class Banner {
     public Banner() {
     }
 
-    public Banner(String categoryID, String name, String image) {
+    public Banner(String productID, String name, String image) {
         this.productID = productID;
         this.name = name;
         this.image = image;
@@ -20,8 +18,8 @@ public class Banner {
         return productID;
     }
 
-    public void setProductID(String categoryID) {
-        this.productID = categoryID;
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     public String getName() {

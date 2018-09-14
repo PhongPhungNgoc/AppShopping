@@ -7,6 +7,15 @@
     android:background="@android:color/white"
     tools:context=".SignInActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        style="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:layout_margin="20dp"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,16 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
-            android:text="Phong Phung"
             android:textColor="@android:color/black"
-            android:textSize="34sp"
+            android:textSize="32sp"
             android:inputType="text"
             app:met_baseColor="@android:color/black"
             app:met_floatingLabel="highlight"
             app:met_maxCharacters="11"
             app:met_primaryColor="@android:color/black"
-            app:met_singleLineEllipsis="true"
-            />
+            app:met_singleLineEllipsis="true" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtPhone"
@@ -38,16 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/black"
-            android:text="0988123452"
             android:textColor="@android:color/black"
-            android:textSize="34sp"
+            android:textSize="32sp"
             android:inputType="phone"
             app:met_baseColor="@android:color/black"
             app:met_floatingLabel="highlight"
             app:met_maxCharacters="11"
             app:met_primaryColor="@android:color/black"
-            app:met_singleLineEllipsis="true"
-            />
+            app:met_singleLineEllipsis="true" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edtPassword"
@@ -60,7 +65,7 @@
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
-            android:textSize="34sp"
+            android:textSize="32sp"
             app:met_baseColor="@android:color/black"
             app:met_floatingLabel="highlight"
             app:met_maxCharacters="11"
@@ -75,7 +80,7 @@
             android:textColorHint="@android:color/black"
             android:text="1234"
             android:textColor="@android:color/black"
-            android:textSize="34sp"
+            android:textSize="32sp"
             android:inputType="text"
             app:met_baseColor="@android:color/black"
             app:met_floatingLabel="highlight"
@@ -95,6 +100,7 @@
         android:textColor="@android:color/white"
         android:shadowColor="@android:color/black"
         android:fontFamily="sans-serif"
-        />
+        android:background="@color/btnSignUp"
+        android:layout_margin="5dp"/>
 
 </RelativeLayout>

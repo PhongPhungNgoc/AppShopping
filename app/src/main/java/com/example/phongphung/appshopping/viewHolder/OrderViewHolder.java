@@ -31,5 +31,4 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         tvOrderStatus.setText(orderRequest.getStatus());
         tvOrderAdress.setText(orderRequest.getAdress());
     }
-
 }

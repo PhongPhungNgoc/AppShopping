@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailViewHolder>{
+public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailViewHolder> {
 
     private ArrayList<Order> orderList;
     private LayoutInflater inflater;
@@ -21,22 +21,20 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailViewHold
 
     public OrderDetailAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
+        this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public OrderDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.activity_order_detail_actitity, parent, false);
+        View view = inflater.inflate(R.layout.order_detail_item, parent, false);
         OrderDetailViewHolder orderDetailViewHolder = new OrderDetailViewHolder(view);
         return orderDetailViewHolder;
     }
 
     @Override
     public void onBindViewHolder(OrderDetailViewHolder holder, int position) {
-        Picasso.with(context)
-                .load(orderList.get(position).getImage())
-                .centerCrop()
-                .into(holder.imgDetail);
+        Picasso.with(context).load(orderList.get(position).getImage().trim()).into(holder.imgDetail);
         holder.tvProductDetailID.setText(orderList.get(position).getProductId());
         holder.tvProductDetailName.setText(orderList.get(position).getProductName());
         holder.tvProductDetailPrice.setText(orderList.get(position).getPrice());

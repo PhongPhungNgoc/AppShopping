@@ -32,7 +32,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //    support design
+    //support design
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     //man hinh dang nhap
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
@@ -60,7 +60,7 @@ dependencies {
     //insert bang vao android
     //remember
     implementation 'io.paperdb:paperdb:2.1'
-    // luu du lieu giosng shared pre
+    // luu du lieu giong shared pre
     implementation 'com.github.rey5137:material:1.2.4'
     //facebook
     implementation 'com.facebook.android:facebook-share:4.31.0'
@@ -81,6 +81,7 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
 
     implementation 'com.android.support:multidex:1.0.3'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

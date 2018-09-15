@@ -135,7 +135,6 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
         fab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -293,8 +292,6 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_menu) {
-
-        } else if (id == R.id.nav_favorites) {
             Intent intent = new Intent(HomeActivity.this, FavouriteActivity.class);
             startActivity(intent);
 

@@ -41,8 +41,6 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
         //load image in cart item.
         Picasso.with(cartActivity.getBaseContext())
                 .load(listData.get(position).getImage())
-                .resize(70,70)
-                .centerCrop()
                 .into(holder.cartImageView);
 
         holder.quantityCartButton.setNumber(listData.get(position).getQuantity()); //setear quantity elegido en el button - +

@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phongphung.appshopping.adapter.OrderDetailAdapter;
+import com.example.phongphung.appshopping.common.Common;
 import com.example.phongphung.appshopping.model.Order;
 import com.example.phongphung.appshopping.model.OrderRequest;
 
@@ -15,10 +18,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class OrderDetailActitity extends AppCompatActivity {
+public class OrderDetailActitity extends AppCompatActivity{
 
-    @BindView(R.id.recycle_foodOrder)
+    @BindView(R.id.recycle_productOrder)
     RecyclerView recycleProductOrder;
     @BindView(R.id.tv_PhoneDetail)
     TextView tvPhoneDetail;
@@ -33,6 +37,7 @@ public class OrderDetailActitity extends AppCompatActivity {
     @BindView(R.id.tv_AddressDetail)
     TextView tvAddressDetail;
 
+
     private ArrayList<Order> productList = new ArrayList<>();
     private OrderDetailAdapter adapter;
 
@@ -42,14 +47,16 @@ public class OrderDetailActitity extends AppCompatActivity {
         setContentView(R.layout.activity_order_detail_actitity);
         ButterKnife.bind(this);
 
+
         Intent intentDetail = getIntent();
-        OrderRequest orderRequest = (OrderRequest) intentDetail.getSerializableExtra(ListOrderActivity.DETAIL_PRODUCT);
+        OrderRequest orderRequest = (OrderRequest) intentDetail.getSerializableExtra(Common.currentUser.getPhone());
 
         tvPhoneDetail.setText(orderRequest.getPhone());
         tvAmountDetail.setText(String.valueOf(orderRequest.getTotal()));
         tvStateDetail.setText(orderRequest.getPaymentState());
         tvStatusDetail.setText(orderRequest.getStatus());
         tvCommentDetail.setText(orderRequest.getComment());
+        tvAddressDetail.setText(orderRequest.getAdress());
         productList = (ArrayList<Order>) orderRequest.getFoods();
 
         recycleProductOrder.setHasFixedSize(true);
@@ -59,5 +66,7 @@ public class OrderDetailActitity extends AppCompatActivity {
 
         adapter = new OrderDetailAdapter(productList, getApplicationContext());
         recycleProductOrder.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
+
 }

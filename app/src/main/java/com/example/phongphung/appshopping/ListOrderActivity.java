@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
+import com.example.phongphung.appshopping.adapter.OrderAdapter;
 import com.example.phongphung.appshopping.common.Common;
 import com.example.phongphung.appshopping.interFace.PositionClickListener;
 import com.example.phongphung.appshopping.model.OrderRequest;
-import com.example.phongphung.appshopping.adapter.OrderAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +23,9 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class ListOrderActivity extends AppCompatActivity implements PositionClickListener{
+public class ListOrderActivity extends AppCompatActivity implements PositionClickListener {
 
 
     private static final String TAG = "order";
@@ -61,6 +63,7 @@ public class ListOrderActivity extends AppCompatActivity implements PositionClic
                     for (int i = 0; i < listAllOrder.size(); i++) {
                         if (listAllOrder.get(i).getPhone().equals(Common.currentUser.getPhone())) {
                             listOrder.add(listAllOrder.get(i));
+                            Common.currentUser.getPhone();
                         }
                     }
                 }
@@ -81,7 +84,7 @@ public class ListOrderActivity extends AppCompatActivity implements PositionClic
 
         adapter = new OrderAdapter(listOrder, getApplicationContext());
         listOrdersRecycler.setAdapter(adapter);
-     
+
         adapter.notifyDataSetChanged();
 
         adapter.setPositionClickListener(this);
@@ -90,7 +93,8 @@ public class ListOrderActivity extends AppCompatActivity implements PositionClic
     @Override
     public void onClick(int position) {
         Intent intentDetail = new Intent(getApplicationContext(), OrderDetailActitity.class);
-        intentDetail.putExtra(DETAIL_PRODUCT, listOrder.get(position));
+        intentDetail.putExtra(Common.currentUser.getPhone(), listOrder.get(position));
         startActivity(intentDetail);
     }
+
 }

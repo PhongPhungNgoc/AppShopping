@@ -22,8 +22,6 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
         imageView = itemView.findViewById(R.id.menu_image_view);
 
         itemView.setOnClickListener(this);
-
-
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {

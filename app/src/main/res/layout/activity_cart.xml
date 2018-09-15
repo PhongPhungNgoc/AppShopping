@@ -66,7 +66,6 @@
                     android:text="$10,000"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
-
             </LinearLayout>
 
             <Button
@@ -78,7 +77,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="Thanh toán"
-                android:textColor="@android:color/white" />
+                android:background="@color/btnSignUp" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

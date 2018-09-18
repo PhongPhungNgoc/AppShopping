@@ -10,26 +10,19 @@
             android:icon="@drawable/ic_restaurant_black_24dp"
             android:title="Thực đơn"
             android:iconTint="@android:color/white"/>
+
         <item
             android:id="@+id/nav_favorites"
             android:icon="@drawable/ic_favorite_black_24dp"
             android:title="Ưu thích"
             android:iconTint="@android:color/white"/>
-        <!--<item-->
-            <!--android:id="@+id/nav_home_address"-->
-            <!--android:icon="@drawable/ic_home_black_24dp"-->
-            <!--android:title="Địa chỉ nhà"-->
-            <!--android:iconTint="@android:color/white"/>-->
-        <!--<item-->
-            <!--android:id="@+id/nav_cart"-->
-            <!--android:icon="@drawable/ic_shopping_cart_black_24dp"-->
-            <!--android:title="Giỏ hàng"-->
-            <!--android:iconTint="@android:color/white"/>-->
+
         <item
             android:id="@+id/nav_orders"
             android:icon="@drawable/ic_access_time_black_24dp"
             android:title="Đặt hàng"
             android:iconTint="@android:color/white"/>
+
         <item
             android:id="@+id/nav_change_pass"
             android:icon="@drawable/ic_security_black_24dp"

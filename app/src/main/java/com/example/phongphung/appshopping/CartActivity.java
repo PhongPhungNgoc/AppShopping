@@ -114,7 +114,7 @@ public class CartActivity extends AppCompatActivity implements
 
     //Paypal payment
     static PayPalConfiguration config = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX) //use Sandbox because we test, changeit late for you
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(Config.PAYPAL_CLIENT_ID);
 
     String address, comment;
@@ -171,7 +171,7 @@ public class CartActivity extends AppCompatActivity implements
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, LOCATION_REQUEST_CODE);
         } else {
-            if (checkPlayServices()) { //if have play services on device
+            if (checkPlayServices()) {
                 buildGoogleApiClient();
                 createLocationRequest();
             }
@@ -330,7 +330,7 @@ public class CartActivity extends AppCompatActivity implements
         final RadioButton shipToAddressRadioButton = order_address_comment.findViewById(R.id.ship_to_address_radio_button);
         final RadioButton codRadioButton = order_address_comment.findViewById(R.id.cod_radio_button);
         final RadioButton paypalRadioButton = order_address_comment.findViewById(R.id.paypal_radio_button);
-        final RadioButton appBalanceRadioButton = order_address_comment.findViewById(R.id.app_balance_radio_button);
+//
 
         shipToAddressRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -351,34 +351,37 @@ public class CartActivity extends AppCompatActivity implements
                                         JSONArray resultsArray = jsonObject.getJSONArray("results");
                                         JSONObject firstObject = resultsArray.getJSONObject(0);
                                         address = firstObject.getString("formatted_address");
-                                        //Set this address to edit text
+
                                         ((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input))
                                                 .setText(address);
                                         if (!address.equals("")){
                                             shipToAddressRadioButton.setEnabled(false);
+                                            shipToAddressRadioButton.setSelected(false);
+                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setEnabled(false);
+                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setFocusable(false);
                                         }
 
                                         if (!((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input)).getText().equals(address)){
+                                            shipToAddressRadioButton.setEnabled(false);
                                             shipToAddressRadioButton.setSelected(false);
+                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setEnabled(false);
+                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setFocusable(false);
                                         }
-
-
 
                                     } catch (NullPointerException e) {
                                         Log.d(TAG, "onResponse: NullPointerException: " + e.getMessage());
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
 
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
                                     Toast.makeText(CartActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-
                                 }
                             });
                 }
+
             }
         });
 
@@ -388,18 +391,11 @@ public class CartActivity extends AppCompatActivity implements
         alertDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                //Add check condition here
-                //If user select address from Place Fragment, just use it
-                //If user select Ship to this address, get Address from location and use it
-                //If user select Home addres, get addres grom Profile and use it
                 if (!shipToAddressRadioButton.isChecked()) {
-                    //If both radio is not selected ->
                     if (shippingAddress != null) {
                         address = shippingAddress.getAddress().toString();
                     } else {
                         Toast.makeText(CartActivity.this, "Vui lòng nhập vào địa chỉ nhận hàng !!!", Toast.LENGTH_SHORT).show();
-                        //Fix crash fragment (Remove fragment)
                         getFragmentManager().beginTransaction()
                                 .remove(getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment))
                                 .commit();
@@ -409,17 +405,15 @@ public class CartActivity extends AppCompatActivity implements
 
                 if (TextUtils.isEmpty(address)) {
                     Toast.makeText(CartActivity.this, "Vui lòng nhập vào địa chỉ nhận hàng !!!", Toast.LENGTH_SHORT).show();
-                    //Fix crash fragment (Remove fragment)
                     getFragmentManager().beginTransaction()
                             .remove(getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment))
                             .commit();
                     return;
                 }
-
                 comment = commentEditText.getText().toString();
 
                 //check payment
-                if (!codRadioButton.isChecked() && !paypalRadioButton.isChecked() && !appBalanceRadioButton.isChecked()) {//If both Cod and appbalance and Paypal is not checked.
+                if (!codRadioButton.isChecked() && !paypalRadioButton.isChecked()) {
 
                     Toast.makeText(CartActivity.this, "Vui lòng chọn phương thức thanh toán !!!", Toast.LENGTH_SHORT).show();
                     //Fix crash fragment (Remove fragment)
@@ -444,7 +438,6 @@ public class CartActivity extends AppCompatActivity implements
                     startActivityForResult(intent, PAYPAL_REQUEST_CODE);
 
                 } else if (codRadioButton.isChecked()) {
-
                     //Copy code from onActivityresult
                     //Create new OrderRequest
                     OrderRequest orderRequest = new OrderRequest(
@@ -459,97 +452,16 @@ public class CartActivity extends AppCompatActivity implements
                             orders
                     );
 
-
-
-                    //Submit to Firebase
-                    //We will using System.currentMilli to key
                     String order_number = String.valueOf(System.currentTimeMillis());
                     requests.child(order_number)
                             .setValue(orderRequest);
                     //Delete Cart
                     new Database(getBaseContext()).cleanCart(Common.currentUser.getPhone());
-
-
                     Toast.makeText(CartActivity.this, "Cảm ơn , Đơn hàng đang được xử lý !!!", Toast.LENGTH_LONG).show();
-
-//                    Intent intentOrder = new Intent(getApplicationContext(), HomeActivity.class);
-//                    intentOrder.putExtra("ORDER", orderRequest);
-//                    startActivity(intentOrder);
 
                     finish();
 
-
-                } else if (appBalanceRadioButton.isChecked()) {
-
-                    double amount = 0;
-                    //firts, we will get total price from txtTotalprice
-                    try {
-                        amount = Common.formatConcurrency(totalPriceTextView.getText().toString(), Locale.US).doubleValue();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    //After rerecive total price of this order, just comparte with user balance
-                    if (Double.parseDouble(String.valueOf(Common.currentUser.getBalance())) >= amount) {
-
-                        //Create new OrderRequest
-                        OrderRequest orderRequest = new OrderRequest(
-                                Common.currentUser.getPhone(),
-                                Common.currentUser.getName(),
-                                address,
-                                totalPriceTextView.getText().toString(),
-                                comment,
-                                "App Balance",
-                                "Paid",
-                                String.format("%s %s", mLastLocation.getLatitude(), mLastLocation.getLongitude()),//Coordinates when user order.
-                                orders
-                        );
-
-                        //Submit to Firebase
-                        //We will using System.currentMilli to key
-                        final String order_number = String.valueOf(System.currentTimeMillis());
-                        requests.child(order_number)
-                                .setValue(orderRequest);
-                        //Delete Cart
-                        new Database(getBaseContext()).cleanCart(Common.currentUser.getPhone());
-
-                        //Update balance
-                        double balance = Double.parseDouble(String.valueOf(Common.currentUser.getBalance())) - amount;
-                        Map<String, Object> update_balance = new HashMap<>();
-                        update_balance.put("balance", balance);
-
-                        FirebaseDatabase.getInstance().getReference("Users")
-                                .child(Common.currentUser.getPhone())
-                                .updateChildren(update_balance)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-
-                                            //Refresh user
-                                            FirebaseDatabase.getInstance().getReference("Users")
-                                                    .child(Common.currentUser.getPhone())
-                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                                            Common.currentUser = dataSnapshot.getValue(User.class);
-                                                            //Send order to server
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(DatabaseError databaseError) {
-
-                                                        }
-                                                    });
-                                        }
-                                    }
-                                });
-
-                    } else {
-                        Toast.makeText(CartActivity.this, "Ví của bạn hiện không đủ tiền, vui lòng chọn phương thức khác.", Toast.LENGTH_SHORT).show();
-                    }
                 }
-
                 //Remove fragment
                 getFragmentManager().beginTransaction()
                         .remove(getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment))
@@ -598,8 +510,6 @@ public class CartActivity extends AppCompatActivity implements
                                 orders
                         );
 
-                        //Submit to Firebase
-                        //We will using System.currentMilli to key
                         String order_number = String.valueOf(System.currentTimeMillis());
                         requests.child(order_number)
                                 .setValue(orderRequest);
@@ -627,7 +537,6 @@ public class CartActivity extends AppCompatActivity implements
         //adapter.notifyDataSetChanged(); //no needed because user not add items while he see his orders.
         recyclerView.setAdapter(adapter);
 
-        //Calculate total price
         float total = 0;
         for (Order order : orders) {
             total += (Float.parseFloat(order.getPrice())) * (Float.parseFloat(order.getQuantity()));
@@ -680,7 +589,6 @@ public class CartActivity extends AppCompatActivity implements
     public void onLocationChanged(Location location) {
         mLastLocation = location;
         displayLocation();
-
     }
 
     @Override
@@ -695,8 +603,6 @@ public class CartActivity extends AppCompatActivity implements
             adapter.removeItem(deleteIndex);
             new Database(getBaseContext()).removeFromCart(deleteItem.getProductId(), Common.currentUser.getPhone());
 
-            //Update extTotal
-            //Calculate total price
             float total = 0;
             List<Order> orders = new Database(getBaseContext()).getCarts(Common.currentUser.getPhone());
             for (Order item : orders) {
@@ -706,16 +612,13 @@ public class CartActivity extends AppCompatActivity implements
             NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
             totalPriceTextView.setText(fmt.format(total));
 
-            //Make snackbar
             Snackbar snackbar = Snackbar.make(rootLayout, name + " xóa khỏi giỏ hàng!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+            snackbar.setAction("Hủy", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     adapter.restoreItem(deleteItem, deleteIndex);
                     new Database(getBaseContext()).addToCart(deleteItem);
 
-                    //Update extTotal
-                    //Calculate total price
                     float total = 0;
                     List<Order> orders = new Database(getBaseContext()).getCarts(Common.currentUser.getPhone());
                     for (Order item : orders) {
@@ -735,7 +638,6 @@ public class CartActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
     }
 }
 

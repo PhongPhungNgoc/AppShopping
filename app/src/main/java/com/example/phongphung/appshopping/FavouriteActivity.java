@@ -66,7 +66,7 @@ public class FavouriteActivity extends AppCompatActivity implements RecyclerItem
             new Database(getBaseContext()).removeFromFavorites(deleteItem.getProductID(), Common.currentUser.getPhone());
 
             Snackbar snackbar = Snackbar.make(rootLayout, name + " xóa khỏi ưa thích", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+            snackbar.setAction("Hủy", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     adapter.restoreItem(deleteItem,deleteIndex);

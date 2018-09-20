@@ -39,7 +39,6 @@ import com.example.phongphung.appshopping.helper.RecyclerItemTouchHelper;
 import com.example.phongphung.appshopping.interFace.RecyclerItemTouchHelperListener;
 import com.example.phongphung.appshopping.model.Order;
 import com.example.phongphung.appshopping.model.OrderRequest;
-import com.example.phongphung.appshopping.model.User;
 import com.example.phongphung.appshopping.remote.IGoogleService;
 import com.example.phongphung.appshopping.adapter.CartAdapter;
 import com.example.phongphung.appshopping.viewHolder.CartViewHolder;
@@ -53,13 +52,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -87,16 +81,14 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CartActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, RecyclerItemTouchHelperListener {
+        RecyclerItemTouchHelperListener {
     private static final String TAG = "CartActivity";
     private static final int PAYPAL_REQUEST_CODE = 9999;
-    private static final int LOCATION_REQUEST_CODE = 9998;
-    private static final int PLAY_SERVICES_REQUEST = 9997;
+//    private static final int LOCATION_REQUEST_CODE = 9998;
+//    private static final int PLAY_SERVICES_REQUEST = 9997;
 
     //Declare Google map Api Retrofit
-    IGoogleService mGoogleMapService;
+//    IGoogleService mGoogleMapService;
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -120,17 +112,16 @@ public class CartActivity extends AppCompatActivity implements
     String address, comment;
 
     //Location
-    private LocationRequest mLocationRequest;
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
-
-    private static final int UPDATE_INTERVAL = 5000;
-    private static final int FASTEST_INTERVAL = 3000;
-    private static final int DISPLACEMENT = 10;
+//    private LocationRequest mLocationRequest;
+//    private GoogleApiClient mGoogleApiClient;
+//    private Location mLastLocation;
+//
+//    private static final int UPDATE_INTERVAL = 5000;
+//    private static final int FASTEST_INTERVAL = 3000;
+//    private static final int DISPLACEMENT = 10;
 
     RelativeLayout rootLayout;
 
-    //Press crtl+O
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -139,7 +130,7 @@ public class CartActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Note: add this code before setContentView method
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/login_font.otf")
                 .setFontAttrId(R.attr.fontPath)
@@ -151,7 +142,7 @@ public class CartActivity extends AppCompatActivity implements
         rootLayout.setBackgroundResource(R.drawable.background);
 
         //Init google api service
-        mGoogleMapService = Common.getGoogleMapsAPI();
+//        mGoogleMapService = Common.getGoogleMapsAPI();
 
         //Init firebase
         database = FirebaseDatabase.getInstance();
@@ -164,18 +155,18 @@ public class CartActivity extends AppCompatActivity implements
 
 
         //Runtime permission
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            }, LOCATION_REQUEST_CODE);
-        } else {
-            if (checkPlayServices()) {
-                buildGoogleApiClient();
-                createLocationRequest();
-            }
-        }
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//            }, LOCATION_REQUEST_CODE);
+//        } else {
+//            if (checkPlayServices()) {
+//                buildGoogleApiClient();
+//                createLocationRequest();
+//            }
+//        }
 
         //Init
         recyclerView = findViewById(R.id.list_cart_recycler);
@@ -209,88 +200,88 @@ public class CartActivity extends AppCompatActivity implements
 
     }
 
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_REQUEST).show();
-            } else {
-                Toast.makeText(this, "Thiết bị không hỗ trợ map", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
+//    private boolean checkPlayServices() {
+//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+//        if (resultCode != ConnectionResult.SUCCESS) {
+//            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+//                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_REQUEST).show();
+//            } else {
+//                Toast.makeText(this, "Thiết bị không hỗ trợ map", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//            return false;
+//        }
+//        return true;
+//    }
 
-    @SuppressLint("RestrictedApi")
-    private void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
-    }
+//    @SuppressLint("RestrictedApi")
+//    private void createLocationRequest() {
+//        mLocationRequest = new LocationRequest();
+//        mLocationRequest.setInterval(UPDATE_INTERVAL);
+//        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
+//    }
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
+//    protected synchronized void buildGoogleApiClient() {
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .addConnectionCallbacks(this)
+//                .addOnConnectionFailedListener(this)
+//                .addApi(LocationServices.API)
+//                .build();
+//        mGoogleApiClient.connect();
+//    }
 
-    private void displayLocation() {
+//    private void displayLocation() {
+//
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        } else {
+//
+//            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//
+//            if (mLastLocation != null) {
+//
+//                Log.d(TAG, "displayLocation: " + mLastLocation.getLatitude() + "," + mLastLocation.getLongitude());
+//
+//                final double latitude = mLastLocation.getLatitude();
+//                final double longitude = mLastLocation.getLongitude();
+//
+//
+//            } else {
+//                Log.d(TAG, "displayLocation: Cannot get your location");
+//            }
+//        }
+//    }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            return;
-        } else {
+//    private void startLocationUpdates() {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+//        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+//    }
 
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-            if (mLastLocation != null) {
-
-                Log.d(TAG, "displayLocation: " + mLastLocation.getLatitude() + "," + mLastLocation.getLongitude());
-
-                final double latitude = mLastLocation.getLatitude();
-                final double longitude = mLastLocation.getLongitude();
-
-
-            } else {
-                Log.d(TAG, "displayLocation: Cannot get your location");
-            }
-        }
-    }
-
-    private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case LOCATION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (checkPlayServices()) {
-                        buildGoogleApiClient();
-                        createLocationRequest();
-                        displayLocation();
-                    }
-                }
-                break;
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case LOCATION_REQUEST_CODE:
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (checkPlayServices()) {
+//                        buildGoogleApiClient();
+//                        createLocationRequest();
+//                        displayLocation();
+//                    }
+//                }
+//                break;
+//        }
+//    }
 
     private void showAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
@@ -300,17 +291,16 @@ public class CartActivity extends AppCompatActivity implements
         final LayoutInflater inflater = this.getLayoutInflater();
         View order_address_comment = inflater.inflate(R.layout.order_address_comment, null);
 
-//        final MaterialEditText addressEditText = order_address_comment.findViewById(R.id.order_address_edit_text);
         final PlaceAutocompleteFragment addressEdit = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        //Hide search icon before fragment
+
         addressEdit.getView().findViewById(R.id.place_autocomplete_search_button).setVisibility(View.GONE);
-        //Set hint for Autocomplete Edit Text
+
         ((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input))
                 .setHint("Enter your address");
-        //Set Text size
+
         ((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input))
                 .setTextSize(14);
-        //get address from PlaceAutocomplete
+
         addressEdit.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -324,66 +314,67 @@ public class CartActivity extends AppCompatActivity implements
             }
         });
 
+//        addressEdit.setText(shippingAddress.toString());
+
         final MaterialEditText commentEditText = order_address_comment.findViewById(R.id.order_comment_edit_text);
 
         //Radio
-        final RadioButton shipToAddressRadioButton = order_address_comment.findViewById(R.id.ship_to_address_radio_button);
+//        final RadioButton shipToAddressRadioButton = order_address_comment.findViewById(R.id.ship_to_address_radio_button);
         final RadioButton codRadioButton = order_address_comment.findViewById(R.id.cod_radio_button);
         final RadioButton paypalRadioButton = order_address_comment.findViewById(R.id.paypal_radio_button);
 //
 
-        shipToAddressRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //Ship to this address features
-                if (isChecked) {
-                    mGoogleMapService.getAddressName(String.format("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false",
-                            mLastLocation.getLatitude(),
-                            mLastLocation.getLongitude()))
-//                    mGoogleMapService.getAddressName("https://maps.googleapis.com/maps/api/geocode/json?latlng=-12.143023,-77.0093788&sensor=false")
-                            .enqueue(new Callback<String>() {
-                                @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
-                                    //If fetchAPI ok
-                                    try {
-                                        Log.d(TAG, "onResponse: RESPONSE: " + response.body());
-                                        JSONObject jsonObject = new JSONObject(response.body());
-                                        JSONArray resultsArray = jsonObject.getJSONArray("results");
-                                        JSONObject firstObject = resultsArray.getJSONObject(0);
-                                        address = firstObject.getString("formatted_address");
-
-                                        ((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input))
-                                                .setText(address);
-                                        if (!address.equals("")){
-                                            shipToAddressRadioButton.setEnabled(false);
-                                            shipToAddressRadioButton.setSelected(false);
-                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setEnabled(false);
-                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setFocusable(false);
-                                        }
-
-                                        if (!((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input)).getText().equals(address)){
-                                            shipToAddressRadioButton.setEnabled(false);
-                                            shipToAddressRadioButton.setSelected(false);
-                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setEnabled(false);
-                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setFocusable(false);
-                                        }
-
-                                    } catch (NullPointerException e) {
-                                        Log.d(TAG, "onResponse: NullPointerException: " + e.getMessage());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<String> call, Throwable t) {
-                                    Toast.makeText(CartActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-
-            }
-        });
+//        shipToAddressRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                //Ship to this address features
+//                if (isChecked) {
+//                    mGoogleMapService.getAddressName(String.format("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false",
+//                            mLastLocation.getLatitude(),
+//                            mLastLocation.getLongitude()))
+////                    mGoogleMapService.getAddressName("https://maps.googleapis.com/maps/api/geocode/json?latlng=-12.143023,-77.0093788&sensor=false")
+//                            .enqueue(new Callback<String>() {
+//                                @Override
+//                                public void onResponse(Call<String> call, Response<String> response) {
+//                                    try {
+//                                        Log.d(TAG, "onResponse: RESPONSE: " + response.body());
+//                                        JSONObject jsonObject = new JSONObject(response.body());
+//                                        JSONArray resultsArray = jsonObject.getJSONArray("results");
+//                                        JSONObject firstObject = resultsArray.getJSONObject(0);
+//                                        address = firstObject.getString("formatted_address");
+//
+//                                        ((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input))
+//                                                .setText(address);
+//                                        if (!address.equals("")){
+//                                            shipToAddressRadioButton.setEnabled(false);
+//                                            shipToAddressRadioButton.setSelected(false);
+//                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setEnabled(false);
+//                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setFocusable(false);
+//                                        }
+//
+//                                        if (!((EditText) addressEdit.getView().findViewById(R.id.place_autocomplete_search_input)).getText().equals(address)){
+//                                            shipToAddressRadioButton.setEnabled(false);
+//                                            shipToAddressRadioButton.setSelected(false);
+//                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setEnabled(false);
+//                                            addressEdit.getView().findViewById(R.id.place_autocomplete_search_input).setFocusable(false);
+//                                        }
+//
+//                                    } catch (NullPointerException e) {
+//                                        Log.d(TAG, "onResponse: NullPointerException: " + e.getMessage());
+//                                    } catch (JSONException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<String> call, Throwable t) {
+//                                    Toast.makeText(CartActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                }
+//
+//            }
+//        });
 
         alertDialog.setView(order_address_comment);
         alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
@@ -391,7 +382,7 @@ public class CartActivity extends AppCompatActivity implements
         alertDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (!shipToAddressRadioButton.isChecked()) {
+//                if (!shipToAddressRadioButton.isChecked()) {
                     if (shippingAddress != null) {
                         address = shippingAddress.getAddress().toString();
                     } else {
@@ -401,7 +392,7 @@ public class CartActivity extends AppCompatActivity implements
                                 .commit();
                         return;
                     }
-                }
+//                }
 
                 if (TextUtils.isEmpty(address)) {
                     Toast.makeText(CartActivity.this, "Vui lòng nhập vào địa chỉ nhận hàng !!!", Toast.LENGTH_SHORT).show();
@@ -410,13 +401,14 @@ public class CartActivity extends AppCompatActivity implements
                             .commit();
                     return;
                 }
+
                 comment = commentEditText.getText().toString();
 
                 //check payment
                 if (!codRadioButton.isChecked() && !paypalRadioButton.isChecked()) {
 
                     Toast.makeText(CartActivity.this, "Vui lòng chọn phương thức thanh toán !!!", Toast.LENGTH_SHORT).show();
-                    //Fix crash fragment (Remove fragment)
+
                     getFragmentManager().beginTransaction()
                             .remove(getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment))
                             .commit();
@@ -438,8 +430,6 @@ public class CartActivity extends AppCompatActivity implements
                     startActivityForResult(intent, PAYPAL_REQUEST_CODE);
 
                 } else if (codRadioButton.isChecked()) {
-                    //Copy code from onActivityresult
-                    //Create new OrderRequest
                     OrderRequest orderRequest = new OrderRequest(
                             Common.currentUser.getPhone(),
                             Common.currentUser.getName(),
@@ -448,7 +438,8 @@ public class CartActivity extends AppCompatActivity implements
                             comment,
                             "COD",
                             "Unpaid",
-                            String.format("%s %s", mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+//                            String.format("%s %s", mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+                            String.format("%s %s", shippingAddress.getLatLng().latitude, shippingAddress.getLatLng().longitude),
                             orders
                     );
 
@@ -469,7 +460,7 @@ public class CartActivity extends AppCompatActivity implements
             }
         });
 
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -497,7 +488,6 @@ public class CartActivity extends AppCompatActivity implements
                         JSONObject jsonObject = new JSONObject(paymentDetail);
                         String paymentState = jsonObject.getJSONObject("response").getString("state");//State from JSON
 
-                        //Create new OrderRequest
                         OrderRequest orderRequest = new OrderRequest(
                                 Common.currentUser.getPhone(),
                                 Common.currentUser.getName(),
@@ -569,27 +559,27 @@ public class CartActivity extends AppCompatActivity implements
         Toast.makeText(this, "Item deleted.", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        displayLocation();
-        startLocationUpdates();
-    }
+//    @Override
+//    public void onConnected(@Nullable Bundle bundle) {
+//        displayLocation();
+//        startLocationUpdates();
+//    }
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-        displayLocation();
-    }
+//    @Override
+//    public void onConnectionSuspended(int i) {
+//        mGoogleApiClient.connect();
+//    }
+//
+//    @Override
+//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//
+//    }
+//
+//    @Override
+//    public void onLocationChanged(Location location) {
+//        mLastLocation = location;
+//        displayLocation();
+//    }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {

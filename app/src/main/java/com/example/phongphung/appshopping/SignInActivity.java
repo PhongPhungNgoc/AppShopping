@@ -74,7 +74,6 @@ public class SignInActivity extends AppCompatActivity {
 
         txtForgotPass.setPaintFlags(txtForgotPass.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-//        init Paper
         Paper.init(this);
     }
 
@@ -84,12 +83,10 @@ public class SignInActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.txtForgotPass:
                 showForgotPassDialog();
-
-
                 break;
+
             case R.id.btnSignIn:
                 if (Common.isConnectedToInternet(getBaseContext())) {
-                    //save user password
                     if (ckbRemember.isChecked()) {
                         Paper.book().write(Common.USER_KEY, edtPhone.getText().toString());
                         Paper.book().write(Common.PASSWORD_KEY, edtPassword.getText().toString());
@@ -101,14 +98,12 @@ public class SignInActivity extends AppCompatActivity {
                     table_User.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            // check nếu user đã tồn tại
                             if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
-                                //Lây thông tin user
                                 mDialog.dismiss();
                                 User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
                                 user.setPhone(edtPhone.getText().toString());
                                 if (user.getPassword().equals(edtPassword.getText().toString())) {
-                                    Toast.makeText(SignInActivity.this, "Sign in Successfully", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(SignInActivity.this, "Sign in Successfully", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                     Common.currentUser = user;
@@ -161,7 +156,6 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.child(edPhone.getText().toString()).getValue(User.class);
-                        Toast.makeText(SignInActivity.this, "Your Password "+ user.getPassword(), Toast.LENGTH_SHORT).show();
                         if(user != null){
                             if (user.getSecureCode().equals(edSecureCode.getText().toString())){
                                 Toast.makeText(SignInActivity.this, "Your Password "+ user.getPassword(), Toast.LENGTH_SHORT).show();
@@ -169,9 +163,8 @@ public class SignInActivity extends AppCompatActivity {
                                 Toast.makeText(SignInActivity.this, "Wrong secure code !", Toast.LENGTH_SHORT).show();
                             }
                         }else {
-                            Toast.makeText(SignInActivity.this, "so dien thoai chua chinh xac", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, "So dien thoai chua chinh xac", Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override

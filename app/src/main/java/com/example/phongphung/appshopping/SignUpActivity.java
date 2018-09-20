@@ -74,10 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
                     } else {
                         mDialog.dismiss();
-//                        User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),edtSecureCode.getText().toString(),null);
-//                        user.setPhone(edtPhone.getText().toString());
                         User user = new User(edtPhone.getText().toString(),
-                                edtName.getText().toString(), edtPassword.getText().toString(),edtSecureCode.getText().toString());
+                                edtName.getText().toString(), edtPassword.getText().toString(), edtSecureCode.getText().toString());
                         user.setPhone(edtPhone.getText().toString());
                         table_User.child(edtPhone.getText().toString()).setValue(user);
                         Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();

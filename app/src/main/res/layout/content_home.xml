@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider_layout"
                 android:layout_width="match_parent"

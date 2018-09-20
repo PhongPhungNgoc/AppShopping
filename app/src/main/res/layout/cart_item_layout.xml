@@ -27,13 +27,11 @@
             android:layout_centerVertical="true"
             android:text="Delete"
             android:textColor="@android:color/white"
-            android:textSize="4sp"
+            android:textSize="5sp"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="RtlHardcoded" />
-
-
     </RelativeLayout>
 
     <LinearLayout
@@ -49,8 +47,7 @@
             android:id="@+id/cart_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_gravity="center_vertical"
-            />
+            android:layout_gravity="center_vertical" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -92,9 +89,6 @@
             android:background="@drawable/background"
             app:initialNumber="1"
             app:finalNumber="20"/>
-
-
-
     </LinearLayout>
 
 

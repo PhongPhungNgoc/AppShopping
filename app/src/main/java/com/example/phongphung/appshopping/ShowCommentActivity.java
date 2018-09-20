@@ -56,25 +56,20 @@ public class ShowCommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_comment);
         ButterKnife.bind(this);
 
-
-        //Init firebase
         database = FirebaseDatabase.getInstance();
         ratingTable = database.getReference("Rating");
 
         layoutManager = new LinearLayoutManager(this);
         recycerComment.setLayoutManager(layoutManager);
 
-        //Swipe Layout
         mSwipeRefreshLayout = findViewById(R.id.swipe_layout_comment);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //Get intentn here
                 if (getIntent() != null) {
                     foodId = getIntent().getStringExtra(Common.INTENT_FOOD_ID);
                 }
                 if (!foodId.isEmpty() && foodId != null) {
-                    //create request query
                     Query query = ratingTable.orderByChild("foodId").equalTo(foodId);
 
                     FirebaseRecyclerOptions<Rating> options = new FirebaseRecyclerOptions.Builder<Rating>()
@@ -95,24 +90,20 @@ public class ShowCommentActivity extends AppCompatActivity {
                             return new ShowCommentViewHolder(view);
                         }
                     };
-
                     loadComment(foodId);
                 }
             }
         });
 
-        //Thread to load comment on first launch
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
 
-                //Get intentn here
                 if (getIntent() != null) {
                     foodId = getIntent().getStringExtra(Common.INTENT_FOOD_ID);
                 }
                 if (!foodId.isEmpty() && foodId != null) {
-                    //create request query
                     Query query = ratingTable.orderByChild("foodId").equalTo(foodId);
 
                     FirebaseRecyclerOptions<Rating> options = new FirebaseRecyclerOptions.Builder<Rating>()
@@ -133,7 +124,6 @@ public class ShowCommentActivity extends AppCompatActivity {
                             return new ShowCommentViewHolder(view);
                         }
                     };
-
                     loadComment(foodId);
                 }
             }

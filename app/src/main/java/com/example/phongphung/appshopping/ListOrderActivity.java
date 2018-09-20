@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ListOrderActivity extends AppCompatActivity implements PositionClickListener {
+public class ListOrderActivity extends AppCompatActivity implements PositionClickListener, ValueEventListener {
 
 
     private static final String TAG = "order";
@@ -52,30 +52,7 @@ public class ListOrderActivity extends AppCompatActivity implements PositionClic
 
         database = FirebaseDatabase.getInstance();
         request = database.getReference("Order");
-
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                listAllOrder.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    listOrder.clear();
-                    listAllOrder.add(ds.getValue(OrderRequest.class));
-                    for (int i = 0; i < listAllOrder.size(); i++) {
-                        if (listAllOrder.get(i).getPhone().equals(Common.currentUser.getPhone())) {
-                            listOrder.add(listAllOrder.get(i));
-                            Common.currentUser.getPhone();
-                        }
-                    }
-                }
-                Collections.reverse(listOrder);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        request.addValueEventListener(eventListener);
+        request.addValueEventListener(this);
 
         listOrdersRecycler.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -84,8 +61,6 @@ public class ListOrderActivity extends AppCompatActivity implements PositionClic
 
         adapter = new OrderAdapter(listOrder, getApplicationContext());
         listOrdersRecycler.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
 
         adapter.setPositionClickListener(this);
     }
@@ -97,4 +72,25 @@ public class ListOrderActivity extends AppCompatActivity implements PositionClic
         startActivity(intentDetail);
     }
 
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        listAllOrder.clear();
+        listOrder.clear();
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            listAllOrder.add(ds.getValue(OrderRequest.class));
+            for (int i = 0; i < listAllOrder.size(); i++) {
+                if (listAllOrder.get(i).getPhone().equals(Common.currentUser.getPhone())) {
+                    listOrder.add(listAllOrder.get(i));
+                    Common.currentUser.getPhone();
+                }
+            }
+        }
+        Collections.reverse(listOrder);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
 }

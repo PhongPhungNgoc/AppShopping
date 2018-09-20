@@ -93,20 +93,16 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
         ButterKnife.bind(this);
 
 
-        //firebase
         database = FirebaseDatabase.getInstance();
 
-        Log.d("abc", "onCreate: "+"abc");
         foods = database.getReference("Product");
         ratingTbl = database.getReference("Rating");
 
-        //Initview
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
 
-//        count item
+
         cartButtonFab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
-        //get food id from intent
         if (getIntent() != null) {
             foodId = getIntent().getStringExtra("FoodID");
             if (!foodId.isEmpty()) {
@@ -224,12 +220,11 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
 
     @Override
     public void onPositiveButtonClicked(int value, String comments) {
-        //get rating and upload to firebase
         final Rating rating = new Rating(Common.currentUser.getPhone(),
                 foodId,
                 String.valueOf(value),
                 comments);
-        //Fix use can rate multiple times
+
         ratingTbl.push()
                 .setValue(rating)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -238,7 +233,6 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingDi
                         Toast.makeText(ProductDetailActivity.this, "Cảm ơn bạn đã đánh giá !!!", Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     @Override

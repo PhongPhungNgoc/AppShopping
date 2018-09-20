@@ -99,7 +99,6 @@ public class ProductListActivity extends AppCompatActivity {
         }
     };
 
-    //Press crtl+O
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -107,7 +106,7 @@ public class ProductListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Note: add this code before setContentView method
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/login_font.otf")
                 .setFontAttrId(R.attr.fontPath)
@@ -115,7 +114,6 @@ public class ProductListActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_product_list);
 
-        //INit facebook
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
@@ -126,10 +124,10 @@ public class ProductListActivity extends AppCompatActivity {
         localDB = new Database(this);
 
         swipeRefreshLayout = findViewById(R.id.swipe_layout_food);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
-                android.R.color.holo_green_dark,
-                android.R.color.holo_orange_dark,
-                android.R.color.holo_blue_dark);
+//        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+//                android.R.color.holo_green_dark,
+//                android.R.color.holo_orange_dark,
+//                android.R.color.holo_blue_dark);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -158,7 +156,6 @@ public class ProductListActivity extends AppCompatActivity {
                 if(getIntent() != null){
                     categoryId = getIntent().getStringExtra("CategoryID");
                     if(!categoryId.isEmpty() && categoryId != null){
-                        //check internet connection and load foods list
                         if(Common.isConnectedToInternet(getBaseContext())) {
                             loadListFood(categoryId);
                         }  else {
@@ -181,8 +178,6 @@ public class ProductListActivity extends AppCompatActivity {
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            //Then user type their text, we will change suggest list
-
                             List<String> suggest = new ArrayList<>();
                             for(String search : suggestList){
                                 if(search.toLowerCase().contains(materialSearchBar.getText().toLowerCase())){
@@ -412,7 +407,6 @@ public class ProductListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //Fix click back on Product detail and get no item in Product list
         if(adapter != null){
             adapter.startListening();
         }

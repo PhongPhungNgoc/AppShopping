@@ -35,7 +35,7 @@ public class FavouriteActivity extends AppCompatActivity implements RecyclerItem
 
 
         rootLayout = findViewById(R.id.root_layout);
-        //Load menu
+
         recyclerView = findViewById(R.id.rcvFavorite);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

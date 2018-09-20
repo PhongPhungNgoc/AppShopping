@@ -65,21 +65,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/NABILA.TTF");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/NABILA.TTF");
         txtSologan.setTypeface(typeface);
 
         database = FirebaseDatabase.getInstance();
         table_User = database.getReference("User");
 
-        //init paper
         Paper.init(this);
 
-        //check remember
         String user = Paper.book().read(Common.USER_KEY);
         String password = Paper.book().read(Common.PASSWORD_KEY);
-        if (user != null && password != null){
-            if (!user.isEmpty() && ! password.isEmpty()){
-                login(user,password);
+        if (user != null && password != null) {
+            if (!user.isEmpty() && !password.isEmpty()) {
+                login(user, password);
             }
         }
 
@@ -87,22 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void login(final String phone, final String password) {
         if (Common.isConnectedToInternet(getBaseContext())) {
-
             final ProgressDialog mDialog = new ProgressDialog(this);
             mDialog.setMessage("Vui lòng chờ...");
             mDialog.show();
             table_User.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    // check nếu user đã tồn tại
                     if (dataSnapshot.child(phone).exists()) {
-
-                        //Lây thông tin user
                         mDialog.dismiss();
                         User user = dataSnapshot.child(phone).getValue(User.class);
                         user.setPhone(phone);
                         if (user.getPassword().equals(password)) {
-                            Toast.makeText(MainActivity.this, "Đăng nhập thành công !!!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, "Đăng nhập thành công !!!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             Common.currentUser = user;
                             startActivity(intent);
@@ -133,11 +127,12 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnSignUp:
-                Intent intentSignUp = new Intent(MainActivity.this,SignUpActivity.class);
+                Intent intentSignUp = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intentSignUp);
                 break;
+
             case R.id.btnSignIn:
-                Intent intentSignIn = new Intent(MainActivity.this,SignInActivity.class);
+                Intent intentSignIn = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(intentSignIn);
                 break;
         }

@@ -98,12 +98,10 @@ public class HomeActivity extends AppCompatActivity
 
         Paper.init(this);
 
-        //Init firebase
         database = FirebaseDatabase.getInstance();
         category = database.getReference("Category");
         referenceUser = database.getReference("User");
 
-        //load menu
         FirebaseRecyclerOptions<Category> options = new FirebaseRecyclerOptions.Builder<Category>()
                 .setQuery(category, Category.class)
                 .build();
@@ -117,7 +115,6 @@ public class HomeActivity extends AppCompatActivity
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        //get catagory id send to foodlist activity
                         Intent productList = new Intent(HomeActivity.this, ProductListActivity.class);
                         productList.putExtra("CategoryID", adapter.getRef(position).getKey());
                         startActivity(productList);
@@ -169,7 +166,7 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        //default load for first time
+
         swipeLayoutHome.post(new Runnable() {
             @Override
             public void run() {
@@ -181,7 +178,6 @@ public class HomeActivity extends AppCompatActivity
                 }
             }
         });
-
         setupSlider();
     }
 
@@ -198,6 +194,7 @@ public class HomeActivity extends AppCompatActivity
                     Banner banner = postSnapshot.getValue(Banner.class);
                     imageList.put(banner.getName() + "@@" + banner.getProductID(), banner.getImage());
                 }
+
                 for (String key : imageList.keySet()) {
                     String[] keySplit = key.split("@@");
                     String foodName = keySplit[0];
@@ -217,13 +214,12 @@ public class HomeActivity extends AppCompatActivity
                                     startActivity(intent);
                                 }
                             });
-                    //Add extra bundle
+
                     textSliderView.bundle(new Bundle());
                     textSliderView.getBundle().putString("FoodID", foodId);
 
                     sliderLayout.addSlider(textSliderView);
 
-                    ///Remove event after finish
                     banners.removeEventListener(this);
                 }
             }
@@ -237,7 +233,16 @@ public class HomeActivity extends AppCompatActivity
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(4000);
+        sliderLayout.setDuration(3000);
+    }
+
+    private void loadMenu() {
+        adapter.startListening();
+        recyclerMenu.setAdapter(adapter);
+        swipeLayoutHome.setRefreshing(false);
+
+        recyclerMenu.getAdapter().notifyDataSetChanged();
+        recyclerMenu.scheduleLayoutAnimation();
     }
 
     @Override
@@ -248,17 +253,6 @@ public class HomeActivity extends AppCompatActivity
         if (adapter != null) {
             adapter.startListening();
         }
-    }
-
-    private void loadMenu() {
-
-        adapter.startListening();
-        recyclerMenu.setAdapter(adapter);
-        swipeLayoutHome.setRefreshing(false);
-
-        //Animation
-        recyclerMenu.getAdapter().notifyDataSetChanged();
-        recyclerMenu.scheduleLayoutAnimation();
     }
 
     @Override
@@ -280,33 +274,35 @@ public class HomeActivity extends AppCompatActivity
             a.addCategory(Intent.CATEGORY_HOME);
             a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(a);
-
         }
     }
 
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_menu) {
+            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+            startActivity(intent);
+
+        }
+        if (id == R.id.nav_favorites) {
             Intent intent = new Intent(HomeActivity.this, FavouriteActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_orders){
+        } else if (id == R.id.nav_orders) {
             Intent intent = new Intent(HomeActivity.this, ListOrderActivity.class);
             startActivity(intent);
-        }
 
-        else if (id == R.id.nav_change_pass) {
+        } else if (id == R.id.nav_change_pass) {
             showChangePasswordDialog();
-        }
-        else if (id == R.id.nav_sign_out) {
-            //delete remember user
+
+        } else if (id == R.id.nav_sign_out) {
+
             Paper.book().destroy();
-            //logout
+
             Intent signIn = new Intent(HomeActivity.this, SignInActivity.class);
             signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(signIn);
@@ -332,12 +328,9 @@ public class HomeActivity extends AppCompatActivity
 
         alertDialog.setView(layout_name);
 
-        //Button
         alertDialog.setPositiveButton("Thay đổi", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                //For use SpotsDialog, use ALertDiaglo (android.app) not v7.
                 final AlertDialog waitingDialog = new SpotsDialog(HomeActivity.this);
                 waitingDialog.show();
 

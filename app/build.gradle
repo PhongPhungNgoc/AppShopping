@@ -44,7 +44,7 @@ dependencies {
     //searh
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
     ///hop rating
-    //    implementation 'com.github.d-max:spots-dialog:0.7@aar'//progress loading
+    //  implementation 'com.github.d-max:spots-dialog:0.7@aar'//progress loading
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'com.github.lguipeng:BubbleView:1.0.1'
     //firebase
@@ -58,9 +58,9 @@ dependencies {
     //sqlite
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     //insert bang vao android
-    //remember
+
     implementation 'io.paperdb:paperdb:2.1'
-    // luu du lieu giong shared pre
+    //Paper
     implementation 'com.github.rey5137:material:1.2.4'
     //facebook
     implementation 'com.facebook.android:facebook-share:4.31.0'
@@ -83,5 +83,4 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
 }
-
 apply plugin: 'com.google.gms.google-services'

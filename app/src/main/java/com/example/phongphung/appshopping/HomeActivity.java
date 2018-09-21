@@ -62,7 +62,6 @@ import io.paperdb.Paper;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "";
     FirebaseDatabase database;
     DatabaseReference category;
     DatabaseReference referenceUser;
@@ -347,6 +346,7 @@ public class HomeActivity extends AppCompatActivity
                                     public void onComplete(@NonNull Task<Void> task) {
                                         waitingDialog.dismiss();
                                         Toast.makeText(HomeActivity.this, "Mật khẩu đã thay đổi. Please Sign Out !", Toast.LENGTH_SHORT).show();
+                                        finish();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -355,13 +355,14 @@ public class HomeActivity extends AppCompatActivity
                                         Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
                     } else {
-                        Toast.makeText(HomeActivity.this, "Mật khẩu mới không khớp nhau !!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "Mật khẩu mới không khớp nhau !", Toast.LENGTH_SHORT).show();
                         waitingDialog.dismiss();
                     }
                 } else {
                     waitingDialog.dismiss();
-                    Toast.makeText(HomeActivity.this, "Mật khẩu cũ không chính xác !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Mật khẩu cũ không chính xác !", Toast.LENGTH_SHORT).show();
                 }
 
 

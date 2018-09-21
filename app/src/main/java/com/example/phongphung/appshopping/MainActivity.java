@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 .build());
 
         FacebookSdk.sdkInitialize(getApplicationContext()); // Init Facebook
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(MainActivity.this, "Mật khẩu không chính xác !!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Mật khẩu không chính xác !", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         mDialog.dismiss();
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Kiểm tra kết nối Internet !!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Kiểm tra kết nối Internet !", Toast.LENGTH_SHORT).show();
             return;
         }
     }

@@ -2,6 +2,7 @@ package com.example.phongphung.appshopping;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -79,8 +80,11 @@ public class SignUpActivity extends AppCompatActivity {
                         user.setPhone(edtPhone.getText().toString());
                         table_User.child(edtPhone.getText().toString()).setValue(user);
                         Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        Intent intentSigIn = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intentSigIn);
                         finish();
                     }
+                    table_User.removeEventListener(this);
                 }
 
                 @Override

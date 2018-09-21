@@ -132,12 +132,10 @@ public class ProductListActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //Get intent here
                 if(getIntent() != null) {
                     categoryId = getIntent().getStringExtra("CategoryID");
                 }
                 if(!categoryId.isEmpty() && categoryId != null){
-                    //check internet connection and load foods list
                     if(Common.isConnectedToInternet(getBaseContext())) {
                         loadListFood(categoryId);
                     }  else {
@@ -145,14 +143,12 @@ public class ProductListActivity extends AppCompatActivity {
                         return;
                     }
                 }
-
             }
         });
 
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                //Get intentn here
                 if(getIntent() != null){
                     categoryId = getIntent().getStringExtra("CategoryID");
                     if(!categoryId.isEmpty() && categoryId != null){
@@ -195,8 +191,6 @@ public class ProductListActivity extends AppCompatActivity {
                     materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
                         @Override
                         public void onSearchStateChanged(boolean enabled) {
-                            //When search bar is close
-                            //Restore original suggest adapter
                             if(!enabled){
                                 recyclerView.setAdapter(adapter);
                             }
@@ -204,8 +198,6 @@ public class ProductListActivity extends AppCompatActivity {
 
                         @Override
                         public void onSearchConfirmed(CharSequence text) {
-                            //When search finish
-                            //Show result of search adapter
                             startSearch(text);
                         }
 
@@ -227,9 +219,9 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void startSearch(CharSequence text) {
-        //Create query by name
+
         Query searchByName = productList.orderByChild("name").equalTo(text.toString());
-        //Create Options with query
+
         FirebaseRecyclerOptions<Product> foodOptions = new FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(searchByName,Product.class)
                 .build();
@@ -245,10 +237,18 @@ public class ProductListActivity extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener(){
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        //Start new activiyt
                         Intent intent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
-                        intent.putExtra("foodId", searchAdapter.getRef(position).getKey()); //send foodId to new activity
+                        intent.putExtra("FoodID", searchAdapter.getRef(position).getKey());
                         startActivity(intent);
+                    }
+                });
+
+                viewHolder.shareImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Picasso.with(getBaseContext())
+                                .load(local.getImage())
+                                .into(target);
                     }
                 });
             }
@@ -262,7 +262,7 @@ public class ProductListActivity extends AppCompatActivity {
         };
 
         searchAdapter.startListening();
-        recyclerView.setAdapter(searchAdapter); //Set adapter for Recycler View is Search result.
+        recyclerView.setAdapter(searchAdapter);
     }
 
     private void loadSuggest() {
@@ -286,9 +286,9 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void loadListFood(String categoryId) {
-        //Create query by category Id
+
         Query searchByCategory = productList.orderByChild("idCategory").equalTo(categoryId);
-        //Create Options with query
+
         FirebaseRecyclerOptions<Product> foodOptions = new FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(searchByCategory,Product.class)
                 .build();
@@ -303,7 +303,6 @@ public class ProductListActivity extends AppCompatActivity {
                         .into(viewHolder.productImageView);
 
                 //Quick orders
-
                 viewHolder.quickCartImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -330,7 +329,7 @@ public class ProductListActivity extends AppCompatActivity {
 
                 //Add favorites
                 if(localDB.isFavorite(adapter.getRef(position).getKey(), Common.currentUser.getPhone())){
-                    viewHolder.favoriteImageView.setImageResource(R.drawable.ic_favorite_black_24dp); //poner corazon redondo.
+                    viewHolder.favoriteImageView.setImageResource(R.drawable.ic_favorite_black_24dp);
                 }
 
                 //Click to Share
@@ -373,9 +372,8 @@ public class ProductListActivity extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener(){
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        //Start new activiyt
                         Intent intent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
-                        intent.putExtra("FoodID", adapter.getRef(position).getKey()); //send foodId to new activity
+                        intent.putExtra("FoodID", adapter.getRef(position).getKey());
                         startActivity(intent);
                     }
                 });

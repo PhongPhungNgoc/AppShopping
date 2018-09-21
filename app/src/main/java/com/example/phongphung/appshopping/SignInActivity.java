@@ -158,9 +158,9 @@ public class SignInActivity extends AppCompatActivity {
                         User user = dataSnapshot.child(edPhone.getText().toString()).getValue(User.class);
                         if(user != null){
                             if (user.getSecureCode().equals(edSecureCode.getText().toString())){
-                                Toast.makeText(SignInActivity.this, "Your Password "+ user.getPassword(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "Password cua ban la:  "+ user.getPassword(), Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(SignInActivity.this, "Wrong secure code !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "Sai Ma Bao Ve !", Toast.LENGTH_SHORT).show();
                             }
                         }else {
                             Toast.makeText(SignInActivity.this, "So dien thoai chua chinh xac", Toast.LENGTH_SHORT).show();

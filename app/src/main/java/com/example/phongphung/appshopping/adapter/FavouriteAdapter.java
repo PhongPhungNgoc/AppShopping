@@ -44,7 +44,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavoriteViewHolder> {
                 .load(favoriteList.get(position).getProductImage())
                 .into(viewHolder.productImageView);
 
-        //Quick orders
         viewHolder.quickCartImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +72,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavoriteViewHolder> {
         viewHolder.setItemClickListener(new ItemClickListener(){
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                //Start new activiyt
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("FoodID", favoriteList.get(position).getProductID()); //send foodId to new activity
                 context.startActivity(intent);

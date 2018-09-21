@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:text="Delete"
             android:textColor="@android:color/white"
-            android:textSize="5sp"
+            android:textSize="8sp"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

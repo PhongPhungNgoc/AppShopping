@@ -38,12 +38,11 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
 
     @Override
     public void onBindViewHolder(CartViewHolder holder, final int position) {
-        //load image in cart item.
         Picasso.with(cartActivity.getBaseContext())
                 .load(listData.get(position).getImage())
                 .into(holder.cartImageView);
 
-        holder.quantityCartButton.setNumber(listData.get(position).getQuantity()); //setear quantity elegido en el button - +
+        holder.quantityCartButton.setNumber(listData.get(position).getQuantity());
         holder.quantityCartButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
@@ -51,8 +50,6 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
                 order.setQuantity(String.valueOf(newValue));
                 new Database(cartActivity).updateCart(order);
 
-                //Update extTotal
-                //Calculate total price
                 float total = 0;
                 List<Order> orders = new Database(cartActivity).getCarts(Common.currentUser.getPhone());
                 for(Order item: orders){
